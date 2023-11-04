@@ -7,9 +7,9 @@ import NavBar from "./components/NavBar/NavBar"
 function App() {
   return (
     <div className={styles.app}>
-      {/* <Login /> */}
-      <NavBar loggedIn={true} />
-      <DoctorDashboard />
+      <Login />
+      {/* <NavBar loggedIn={true} />
+      <DoctorDashboard /> */}
     </div>
   )
 }
