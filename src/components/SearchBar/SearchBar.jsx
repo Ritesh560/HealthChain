@@ -1,12 +1,12 @@
 import React from "react"
 import styles from "./SearchBar.module.scss"
-import { ReactComponent as Search } from "../../../libs/icons/search.svg"
+import { ReactComponent as Search } from "../../libs/icons/search.svg"
 
-function SearchBar() {
+function SearchBar({ className }) {
   return (
-    <div className={styles.searchBar}>
-      <Search />
-      <input type="text" className="input" />
+    <div className={styles.searchBar + " " + { ...className }}>
+      <Search className={styles.searchIcon} />
+      <input type="text" className={styles.input} />
     </div>
   )
 }
