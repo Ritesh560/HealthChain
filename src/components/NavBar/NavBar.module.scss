@@ -1,0 +1,53 @@
+.navBarContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 10%;
+  background-color: rgb(245, 247, 247);
+
+  .logo {
+    font-weight: bold;
+    font-size: 20px;
+  }
+
+  .loggedOut {
+    width: 100px;
+    height: 40px;
+    border-radius: 10px;
+    background-color: rgb(55, 112, 255);
+    color: white;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+  }
+
+  .profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    .image {
+      border: 1px solid rgb(173, 167, 167);
+      border-radius: 50%;
+      overflow: hidden;
+      width: 30px;
+      height: 30px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      img {
+        width: 30px;
+        height: 30px;
+        // border-radius: 50%;
+      }
+    }
+    .userKey {
+      width: 100px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+}
