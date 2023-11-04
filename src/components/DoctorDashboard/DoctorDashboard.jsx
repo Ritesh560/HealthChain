@@ -1,6 +1,7 @@
 import React from "react"
 import SearchBar from "../SearchBar/SearchBar"
 import styles from "./DoctorDashboard.module.scss"
+import Illness from "../Illness/Illness"
 
 const DoctorDashboard = () => {
   return (
@@ -10,7 +11,7 @@ const DoctorDashboard = () => {
         <SearchBar />
       </div>
 
-      <div className={styles.patientsCards}>
+      {/* <div className={styles.patientsCards}>
         {[...Array(10)].map((a) => (
           <div className={styles.card}>
             <div className={styles.userImg}>
@@ -22,7 +23,8 @@ const DoctorDashboard = () => {
             </div>
           </div>
         ))}
-      </div>
+      </div> */}
+      <Illness />
     </div>
   )
 }
