@@ -34,7 +34,7 @@ contract HealthChain {
     mapping(address => Doctor) public doctors;//all doctors
     mapping(string => Illness) public illnuses;//all illnuses
     mapping(address => Illness[]) public patients_illness_map;//patients illnuses
-
+    mapping(string => Record[]) public illness_record_map; //illness to records map
     // Doctor functions
     function createDoctor(string memory name , uint age , string memory gender, string memory hospital_name) public {
         Doctor memory newDoc;
@@ -77,12 +77,31 @@ contract HealthChain {
     }
     
     // Add illness for a patient
-    function addIllnessRecord(string memory ill_id, string memory illnessName) public {
+    function addIllness(string memory ill_id, string memory illnessName) public {
         Illness memory newIllness ;
         newIllness.ill_id = ill_id;
         newIllness.name = illnessName;
         illnuses[ill_id] = newIllness;
+        Illness[] memory curr_illnuses = patients_illness_map[msg.sender];
+        Illness[] memory new_ills = new Illness[](curr_illnuses.length+1);
+        for(uint i =0;i<curr_illnuses.length;i++){
+            new_ills[i] = curr_illnuses[i];
+        }
+        new_ills[curr_illnuses.length] = newIllness;
     }
-    
-    
+    function addRecord(string memory name , string memory url , string memory upload_date , string memory ill_id)public view{
+        Record memory newRec;
+        newRec.name = name;
+        newRec.url = url;
+        newRec.upload_date = upload_date;
+        Record[] memory curr_reports = illness_record_map[ill_id];
+        Record[] memory new_reports = new Record[](curr_reports.length+1);
+        for(uint i =0;i<curr_reports.length;i++){
+            new_reports[i] = curr_reports[i];
+        }
+        new_reports[curr_reports.length] = newRec;
+    }    
+    function getRecords(string memory ill_id)public view returns(Record[] memory){
+        return illness_record_map[ill_id];
+    }
 }
