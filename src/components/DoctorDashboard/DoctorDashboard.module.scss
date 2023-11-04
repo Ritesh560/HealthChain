@@ -1,7 +1,11 @@
 .dashboard {
+  flex: 1;
   padding: 0 10%;
+  display: flex;
+  flex-direction: column;
 
   .header {
+    height: max-content;
     padding: 10px 0;
     display: flex;
     align-items: center;
@@ -15,6 +19,72 @@
     .search {
       width: 30px;
       height: 500px;
+    }
+  }
+
+  .patientsCards {
+    display: flex;
+    align-items: start;
+    justify-content: start;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 20px;
+    overflow: scroll;
+
+    &::-webkit-scrollbar {
+      width: 0;
+      height: 0;
+    }
+
+    .card {
+      background: #ffffff;
+      border-radius: 15px;
+      position: relative;
+      height: 200px;
+      width: 272px;
+      cursor: pointer;
+      border: 1px solid #f5f6f7;
+      filter: drop-shadow(-2px 4px 20px rgba(57, 71, 89, 0.04));
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+
+      &:hover {
+        box-shadow: 4px 13px 50px 0px #3b39591f;
+      }
+
+      .userImg {
+        border: 1px solid rgb(173, 167, 167);
+        border-radius: 50%;
+        overflow: hidden;
+        width: 70px;
+        height: 70px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        img {
+          width: 70px;
+          height: 70px;
+        }
+      }
+
+      .userInfo {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        .name {
+          font-size: 18px;
+          font-weight: 500;
+        }
+        .age {
+          font-weight: 400;
+          font-size: 16px;
+        }
+      }
     }
   }
 }
