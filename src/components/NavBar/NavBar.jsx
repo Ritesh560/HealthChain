@@ -3,7 +3,7 @@ import styles from "./NavBar.module.scss";
 import { useWeb3 } from "../../context/Web3Context";
 import toast from "react-hot-toast";
 
-function NavBar() {
+function NavBar({ loggedIn }) {
   const { healthChainInstance, setAccount, user, setUser } = useWeb3();
   const [name, setName] = useState("");
   const [naccount, setnAccount] = useState("");

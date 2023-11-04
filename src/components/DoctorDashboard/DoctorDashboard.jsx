@@ -11,7 +11,7 @@ const DoctorDashboard = () => {
       <div className={styles.header}>
         <p className={styles.title}>All {!!selectedPatient.length ? "sickness records" : "patients"}</p>
         <SearchBar />
-        <div className={styles.addSickness}>Login</div>
+        <div className={styles.addSickness}>+ Add New</div>
       </div>
 
       {!!selectedPatient.length ? (

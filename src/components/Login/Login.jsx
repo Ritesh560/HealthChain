@@ -5,7 +5,8 @@ import NavBar from "../NavBar/NavBar"
 const Login = () => {
   return (
     <div className={styles.loginContainer}>
-      <NavBar />
+      <NavBar loggedIn={false} />
+      <div className="loginPage"></div>
     </div>
   )
 }
