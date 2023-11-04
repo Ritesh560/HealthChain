@@ -6,7 +6,7 @@ function SearchBar({ className }) {
   return (
     <div className={styles.searchBar + " " + { ...className }}>
       <Search className={styles.searchIcon} />
-      <input type="text" className={styles.input} />
+      <input type="text" className={styles.input} placeholder="Search" />
     </div>
   )
 }
