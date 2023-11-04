@@ -41,4 +41,52 @@
       gap: 15px;
     }
   }
+
+  .recordsModal {
+    width: 80%;
+    height: 80%;
+
+    .records {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+      padding: 20px 0;
+      .record {
+        width: calc(50% - 5px);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 5px 10px;
+        border: 1px solid black;
+        border-radius: 10px;
+
+        .left {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+
+          .icon {
+            width: 35px;
+            height: 35px;
+            border: 1px solid rgb(151, 146, 146);
+            border-radius: 10px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
+
+          .hex {
+            font-size: 14px;
+          }
+        }
+        .shareAndDelete {
+          display: flex;
+          align-items: center;
+          gap: 20px;
+        }
+      }
+    }
+  }
 }

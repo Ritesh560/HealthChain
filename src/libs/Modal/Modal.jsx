@@ -2,7 +2,7 @@ import { ReactComponent as Close } from "../icons/close.svg"
 import { useEffect, useRef, useState } from "react"
 import styles from "./Modal.module.scss"
 
-const Modal = ({ children, onClose, isModal, className, showCloseButton = false, disableOutsideClick, leftCloseIcon = false, disableCloseHover, closeColor, width, close }) => {
+const Modal = ({ children, onClose, isModal, className, showCloseButton = false, leftCloseIcon = false, disableCloseHover, closeColor, width }) => {
   // for closing on outside click
   const modalRef = useRef(null)
   const closeRef = useRef()
