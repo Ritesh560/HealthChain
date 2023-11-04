@@ -7,7 +7,7 @@
 
   .logo {
     font-weight: bold;
-    font-size: 20px;
+    font-size: 25px;
   }
 
   .loggedOut {
@@ -32,20 +32,22 @@
       border: 1px solid rgb(173, 167, 167);
       border-radius: 50%;
       overflow: hidden;
-      width: 30px;
-      height: 30px;
+      width: 35px;
+      height: 35px;
 
       display: flex;
       align-items: center;
       justify-content: center;
       img {
-        width: 30px;
-        height: 30px;
+        width: 35px;
+        height: 35px;
         // border-radius: 50%;
       }
     }
     .userKey {
       width: 100px;
+      font-size: 18px;
+      font-weight: 600;
       overflow: hidden;
       text-overflow: ellipsis;
     }
