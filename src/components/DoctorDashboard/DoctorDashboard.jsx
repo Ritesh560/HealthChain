@@ -9,7 +9,7 @@ const DoctorDashboard = () => {
   const [isCreateModal, setIsCreateModal] = useState(false)
   const [patients, setPatients] = useState([])
   const { getAllPatients, user, connectedAccount } = useContext(Web3Context)
-  const [selectedPatient, setSelectedPatient] = useState(user?.role === "Patient" ? connectedAccount : "")
+  const [selectedPatient, setSelectedPatient] = useState("")
 
   useEffect(() => {
     const init = async () => {
@@ -20,11 +20,15 @@ const DoctorDashboard = () => {
     init()
   }, [])
 
+  useEffect(() => {
+    if (user?.role === "Patient") setSelectedPatient(connectedAccount)
+  }, [user?.role])
+
   return (
     <div className={styles.dashboard}>
       <div className={styles.header}>
         <p className={styles.title}>
-          {user?.role === "Doctor" && <span onClick={() => setSelectedPatient("")}>{"< Back"}</span>}
+          {user?.role === "Doctor" && !!selectedPatient.length && <span onClick={() => setSelectedPatient("")}>{"< Back"}</span>}
           <p> All {!!selectedPatient.length ? "sickness records" : "patients"}</p>
         </p>
         <SearchBar />
