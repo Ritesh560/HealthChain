@@ -31,15 +31,15 @@ const Login = () => {
 
   return (
     <div className={styles.loginContainer}>
-      {!connectedAccount && (
-        <div className={styles.navBarContainer}>
-          <div className={styles.logo}>HealthChain</div>
+      <div className={styles.navBarContainer}>
+        <div className={styles.logo}>HealthChain</div>
 
+        {!connectedAccount && (
           <div className={styles.loggedOut} onClick={connectWallet}>
             {loading ? <Spinner /> : "Connect"}
           </div>
-        </div>
-      )}
+        )}
+      </div>
       <Modal
         onClose={() => setModal(false)}
         isModal={isModal}
