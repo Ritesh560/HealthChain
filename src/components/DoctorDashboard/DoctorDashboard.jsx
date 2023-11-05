@@ -1,27 +1,27 @@
-import React, { useState } from "react"
+import React, { useState, useContext } from "react"
 import SearchBar from "../SearchBar/SearchBar"
 import styles from "./DoctorDashboard.module.scss"
 import Illness from "../Illness/Illness"
-
-import { ReactComponent as Back } from "../../libs/icons/down_arrow.svg"
+import { Web3Context } from "../../context/Web3Context"
 
 const DoctorDashboard = () => {
   const [selectedPatient, setSelectedPatient] = useState("")
   const [isCreateModal, setIsCreateModal] = useState(false)
+  const { user } = useContext(Web3Context)
 
   return (
     <div className={styles.dashboard}>
       <div className={styles.header}>
         <p className={styles.title}>
-          <span>{"< Back"}</span>
+          {user?.role === "Doctor" && <span onClick={() => setSelectedPatient("")}>{"< Back"}</span>}
           <p> All {!!selectedPatient.length ? "sickness records" : "patients"}</p>
         </p>
         <SearchBar />
-        {/* {!!selectedPatient.length && user?.type === "Patient" && (
+        {!!selectedPatient.length && user?.role === "Patient" && (
           <div className={styles.addSickness} onClick={() => setIsCreateModal(true)}>
             + Add New
           </div>
-        )} */}
+        )}
       </div>
 
       {!!selectedPatient.length ? (
