@@ -1,23 +1,23 @@
-import React, { useState } from "react";
-import styles from "./Illness.module.scss";
-import Modal from "../../libs/Modal/Modal";
-import { ReactComponent as ImageFile } from "../../libs/icons/image_file.svg";
-import { ReactComponent as Share } from "../../libs/icons/share_icon.svg";
-import { ReactComponent as Download } from "../../libs/icons/download.svg";
-import { ReactComponent as Close } from "../../libs/icons/close.svg";
-import CreateIllnessModal from "./components/CreateIllnessModal/CreateIllnessModal";
+import React, { useState } from "react"
+import styles from "./Illness.module.scss"
+import Modal from "../../libs/Modal/Modal"
+import { ReactComponent as ImageFile } from "../../libs/icons/image_file.svg"
+import { ReactComponent as Share } from "../../libs/icons/share_icon.svg"
+import { ReactComponent as Download } from "../../libs/icons/download.svg"
+import { ReactComponent as Close } from "../../libs/icons/close.svg"
+import CreateIllnessModal from "./components/CreateIllnessModal/CreateIllnessModal"
 
 const Illness = ({ isCreateModal, setIsCreateModal }) => {
-  const [selectedIllness, setSelectedIllness] = useState("");
-  const [selectedFile, setSelectedFile] = useState();
+  const [selectedIllness, setSelectedIllness] = useState("")
+  const [selectedFile, setSelectedFile] = useState()
 
   const handleCardClick = () => {
-    setSelectedIllness("abcd");
-  };
+    setSelectedIllness("abcd")
+  }
 
   const handleFileUpload = (e) => {
-    setSelectedFile(e.target.files[0]);
-  };
+    setSelectedFile(e.target.files[0])
+  }
 
   return (
     <div className={styles.illnessCards}>
@@ -38,12 +38,7 @@ const Illness = ({ isCreateModal, setIsCreateModal }) => {
         </div>
       ))}
 
-      <Modal
-        onClose={() => setSelectedIllness("")}
-        showCloseButton
-        isModal={!!selectedIllness?.length}
-        className={styles.recordsModal}
-      >
+      <Modal onClose={() => setSelectedIllness("")} showCloseButton isModal={!!selectedIllness?.length} className={styles.recordsModal}>
         <h2 className={styles.title}>Records</h2>
         <div className={styles.records}>
           {[...Array(20)].map((cur) => (
@@ -76,10 +71,7 @@ const Illness = ({ isCreateModal, setIsCreateModal }) => {
                   <h3 className={styles.name}>{selectedFile?.name}</h3>
                 </div>
               </div>
-              <div
-                className={styles.shareAndDelete}
-                onClick={() => setSelectedFile()}
-              >
+              <div className={styles.shareAndDelete} onClick={() => setSelectedFile()}>
                 <Close />
               </div>
             </div>
@@ -90,22 +82,14 @@ const Illness = ({ isCreateModal, setIsCreateModal }) => {
             <label htmlFor="inputFile" className={styles.create}>
               Create new record
             </label>
-            <input
-              type="file"
-              id="inputFile"
-              className={styles.inputFile}
-              onChange={handleFileUpload}
-            />
+            <input type="file" id="inputFile" className={styles.inputFile} onChange={handleFileUpload} />
           </>
         )}
       </Modal>
 
-      <CreateIllnessModal
-        isModal={isCreateModal}
-        setIsModal={setIsCreateModal}
-      />
+      <CreateIllnessModal isModal={isCreateModal} setIsModal={setIsCreateModal} />
     </div>
-  );
-};
+  )
+}
 
-export default Illness;
+export default Illness
