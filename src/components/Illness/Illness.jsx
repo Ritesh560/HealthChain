@@ -4,9 +4,11 @@ import Modal from "../../libs/Modal/Modal"
 import { ReactComponent as ImageFile } from "../../libs/icons/image_file.svg"
 import { ReactComponent as Share } from "../../libs/icons/share_icon.svg"
 import { ReactComponent as Download } from "../../libs/icons/download.svg"
+import CreateIllnessModal from "./components/CreateIllnessModal/CreateIllnessModal"
 
 const Illness = () => {
   const [selectedIllness, setSelectedIllness] = useState("")
+  const [isCreateModal, setIsCreateModal] = useState(false)
 
   const handleCardClick = () => {
     setSelectedIllness("abcd")
@@ -54,6 +56,8 @@ const Illness = () => {
 
         <div className={styles.create}>Create new record</div>
       </Modal>
+
+      <CreateIllnessModal isModal={isCreateModal} setIsModal={setIsCreateModal} />
     </div>
   )
 }
