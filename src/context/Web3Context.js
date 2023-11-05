@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import * as ethers from "ethers";
 import { contractAbi, contractAddress } from "../utils/constants";
+import toast from "react-hot-toast";
 export const Web3Context = React.createContext();
 
 const { ethereum } = window;
@@ -88,6 +89,7 @@ export const Web3Provider = ({ children }) => {
         return;
       }
       console.log(transactionReceipt);
+      toast.success("Transaction completed");
     } catch (error) {
       console.log(error);
     }
@@ -106,6 +108,7 @@ export const Web3Provider = ({ children }) => {
         return;
       }
       console.log(transactionReceipt);
+      toast.success("Transaction completed");
     } catch (error) {
       console.log(error);
     }
@@ -129,6 +132,49 @@ export const Web3Provider = ({ children }) => {
       console.log(error);
     }
   };
+  const getPatientsIllness = async () => {
+    try {
+      const contract = getEthererumContract();
+      const p = await contract.getPatientsIllness();
+      return p;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getIllnesses = async () => {
+    try {
+      const contract = getEthererumContract();
+      const p = await contract.getIllnesses();
+      return p;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const addIllness = async (ill_id, illnessName, doctor_address) => {
+    try {
+      const contract = getEthererumContract();
+      const transaction = await contract.addIllness(
+        ill_id,
+        illnessName,
+        doctor_address,
+        {
+          gasPrice: ethers.utils.parseUnits("50", "gwei"),
+          gasLimit: 1000000,
+        }
+      );
+      const transactionReceipt = await transaction.wait();
+      if (transactionReceipt.status !== 1) {
+        alert("error message");
+        return;
+      }
+      console.log(transactionReceipt);
+      toast.success("Transaction completed");
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
     checkIfWalletIsConnected();
@@ -148,6 +194,9 @@ export const Web3Provider = ({ children }) => {
         getPatient,
         user,
         setUser,
+        getPatientsIllness,
+        getIllnesses,
+        addIllness,
       }}
     >
       {children}
