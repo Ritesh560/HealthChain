@@ -1,0 +1,15 @@
+.homeContainer {
+  padding: 0 10%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  .left {
+    width: 100%;
+    img {
+      width: 50%;
+      border-radius: 10px;
+    }
+  }
+}

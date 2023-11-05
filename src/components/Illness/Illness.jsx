@@ -6,10 +6,12 @@ import { ReactComponent as Share } from "../../libs/icons/share_icon.svg"
 import { ReactComponent as Download } from "../../libs/icons/download.svg"
 import { ReactComponent as Close } from "../../libs/icons/close.svg"
 import CreateIllnessModal from "./components/CreateIllnessModal/CreateIllnessModal"
+import { useWeb3 } from "../../context/Web3Context"
 
 const Illness = ({ isCreateModal, setIsCreateModal }) => {
   const [selectedIllness, setSelectedIllness] = useState("")
   const [selectedFile, setSelectedFile] = useState()
+  const { user } = useWeb3()
 
   const handleCardClick = () => {
     setSelectedIllness("abcd")
@@ -59,31 +61,32 @@ const Illness = ({ isCreateModal, setIsCreateModal }) => {
           ))}
         </div>
 
-        {!!selectedFile ? (
-          <div className={styles.uploadOptions}>
-            <div className={styles.selectedRecord}>
-              <div className={styles.left}>
-                <div className={styles.icon}>
-                  <ImageFile />
+        {user?.type === "Patient" &&
+          (!!selectedFile ? (
+            <div className={styles.uploadOptions}>
+              <div className={styles.selectedRecord}>
+                <div className={styles.left}>
+                  <div className={styles.icon}>
+                    <ImageFile />
+                  </div>
+                  <div className={styles.info}>
+                    <h3 className={styles.name}>{selectedFile?.name}</h3>
+                  </div>
                 </div>
-                <div className={styles.info}>
-                  <h3 className={styles.name}>{selectedFile?.name}</h3>
+                <div className={styles.shareAndDelete} onClick={() => setSelectedFile()}>
+                  <Close />
                 </div>
               </div>
-              <div className={styles.shareAndDelete} onClick={() => setSelectedFile()}>
-                <Close />
-              </div>
+              <div className={styles.upload}>Upload</div>
             </div>
-            <div className={styles.upload}>Upload</div>
-          </div>
-        ) : (
-          <>
-            <label htmlFor="inputFile" className={styles.create}>
-              Create new record
-            </label>
-            <input type="file" id="inputFile" className={styles.inputFile} onChange={handleFileUpload} />
-          </>
-        )}
+          ) : (
+            <>
+              <label htmlFor="inputFile" className={styles.create}>
+                Create new record
+              </label>
+              <input type="file" id="inputFile" className={styles.inputFile} onChange={handleFileUpload} />
+            </>
+          ))}
       </Modal>
 
       <CreateIllnessModal isModal={isCreateModal} setIsModal={setIsCreateModal} />

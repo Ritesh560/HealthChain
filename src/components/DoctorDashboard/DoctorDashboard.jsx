@@ -2,17 +2,19 @@ import React, { useState } from "react"
 import SearchBar from "../SearchBar/SearchBar"
 import styles from "./DoctorDashboard.module.scss"
 import Illness from "../Illness/Illness"
+import { useWeb3 } from "../../context/Web3Context"
 
 const DoctorDashboard = () => {
   const [selectedPatient, setSelectedPatient] = useState("")
   const [isCreateModal, setIsCreateModal] = useState(false)
+  const { user } = useWeb3()
 
   return (
     <div className={styles.dashboard}>
       <div className={styles.header}>
         <p className={styles.title}>All {!!selectedPatient.length ? "sickness records" : "patients"}</p>
         <SearchBar />
-        {!!selectedPatient.length && (
+        {!!selectedPatient.length && user?.type === "Patient" && (
           <div className={styles.addSickness} onClick={() => setIsCreateModal(true)}>
             + Add New
           </div>
