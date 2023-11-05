@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import styles from "./Login.module.scss";
 import Modal from "../../libs/Modal/Modal";
 
@@ -6,35 +6,21 @@ import { ReactComponent as DoctorIcon } from "../../libs/icons/image_file.svg";
 import { ReactComponent as PatientIcon } from "../../libs/icons/image_file.svg";
 import Select from "../../libs/Select/Select";
 import toast from "react-hot-toast";
-import { useWeb3 } from "../../context/Web3Context";
+import { Web3Context } from "../../context/Web3Context";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../context/AuthContext";
 
 const Login = () => {
-  const navigate = useNavigate();
-  const { healthChainInstance, account, connected } = useWeb3();
-  const { user, setUser, init } = useAuth();
   const [loading, setLoading] = useState(false);
   const [isModal, setModal] = useState(false);
 
-  const signUp = async (e) => {
-    e.preventDefault();
-    try {
-      setLoading(true);
-      const res = await healthChainInstance.methods.getStatus().call();
-      console.log(res);
-      if (res === "Unregistered") {
-        setModal(true);
-      } else {
-        await init();
-      }
-      // setModal(false);
-    } catch (error) {
-      toast.error(error.message);
-      setModal(false);
-      setLoading(false);
+  const { connectedAccount, connectWallet } = useContext(Web3Context);
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (connectedAccount) {
+      navigate("/dashboard");
     }
-  };
+  }, [connectedAccount]);
+
   const [info, setInfo] = useState({
     type: "Doctor", //Patient
     name: "",
@@ -43,48 +29,49 @@ const Login = () => {
     hospital: "",
   });
 
-  const create = async () => {
-    if (info.type === "Doctor") {
-      await healthChainInstance.methods
-        .createDoctor(info.name, info.age, info.gender, info.hospital)
-        .send({
-          from: account,
-        })
-        .on("receipt", function (receipt) {
-          toast.success(
-            `Transaction completed. ${receipt.transactionHash.slice(0, 10)}...`
-          );
-          toast.success("Profile created");
-        });
-      setUser((prev) => {
-        return { ...prev, type: "Doctor" };
-      });
-    } else if (info.type === "Patient") {
-      await healthChainInstance.methods
-        .createPatient(info.name, info.age, info.gender)
-        .send({
-          from: account,
-        })
-        .on("receipt", function (receipt) {
-          toast.success(
-            `Transaction completed. ${receipt.transactionHash.slice(0, 10)}...`
-          );
-          toast.success("Profile created");
-        });
-      setUser((prev) => {
-        return { ...prev, type: "Patient" };
-      });
-    }
-    setModal(false);
-    // navigate("/dashboard");
-  };
+  // const create = async () => {
+  //   console.log(account);
+  //   if (info.type === "Doctor") {
+  //     await healthChainInstance.methods
+  //       .createDoctor(info.name, info.age, info.gender, info.hospital)
+  //       .send({
+  //         from: account,
+  //       })
+  //       .on("receipt", function (receipt) {
+  //         toast.success(
+  //           `Transaction completed. ${receipt.transactionHash.slice(0, 10)}...`
+  //         );
+  //         toast.success("Profile created");
+  //       });
+  //     setUser((prev) => {
+  //       return { ...prev, type: "Doctor" };
+  //     });
+  //   } else if (info.type === "Patient") {
+  //     await healthChainInstance.methods
+  //       .createPatient(info.name, info.age, info.gender)
+  //       .send({
+  //         from: account,
+  //       })
+  //       .on("receipt", function (receipt) {
+  //         toast.success(
+  //           `Transaction completed. ${receipt.transactionHash.slice(0, 10)}...`
+  //         );
+  //         toast.success("Profile created");
+  //       });
+  //     setUser((prev) => {
+  //       return { ...prev, type: "Patient" };
+  //     });
+  //   }
+  //   setModal(false);
+  //   navigate("/dashboard");
+  // };
 
   return (
     <div className={styles.loginContainer}>
-      {!connected && (
+      {!connectedAccount && (
         <div className={styles.navBarContainer}>
           <div className={styles.logo}>HealthChain</div>
-          <div className={styles.loggedOut} onClick={signUp}>
+          <div className={styles.loggedOut} onClick={connectWallet}>
             Connect
           </div>
         </div>
@@ -170,9 +157,7 @@ const Login = () => {
             </div>
           )}
         </div>
-        <div className={styles.create} onClick={create}>
-          Create account
-        </div>
+        <div className={styles.create}>Create account</div>
       </Modal>
     </div>
   );
