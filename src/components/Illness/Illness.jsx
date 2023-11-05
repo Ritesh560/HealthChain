@@ -23,20 +23,22 @@ const Illness = ({ isCreateModal, setIsCreateModal }) => {
 
   return (
     <div className={styles.illnessCards}>
-      <div className={styles.card} onClick={handleCardClick}>
-        <div className={styles.disease}>
-          <h4>Disease</h4>
-          <p>Cancer</p>
+      {[...Array(5)].map((cur) => (
+        <div className={styles.card} onClick={handleCardClick}>
+          <div className={styles.disease}>
+            <h4>Disease</h4>
+            <p>Cancer</p>
+          </div>
+          <div className={styles.doctor}>
+            <h4>Doctor</h4>
+            <p>bharat</p>
+          </div>
+          <div className={styles.date}>
+            <h4>Date</h4>
+            <p>5 april 2022</p>
+          </div>
         </div>
-        <div className={styles.doctor}>
-          <h4>Doctor</h4>
-          <p>bharat</p>
-        </div>
-        <div className={styles.date}>
-          <h4>Date</h4>
-          <p>5 april 2022</p>
-        </div>
-      </div>
+      ))}
 
       <Modal onClose={() => setSelectedIllness("")} showCloseButton isModal={!!selectedIllness?.length} className={styles.recordsModal}>
         <h2 className={styles.title}>Records</h2>
