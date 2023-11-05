@@ -18,6 +18,7 @@ const getEthererumContract = () => {
 };
 
 export const Web3Provider = ({ children }) => {
+  const [user, setUser] = useState({});
   const [connectedAccount, setConnectedAccount] = useState("");
 
   const checkIfWalletIsConnected = async () => {
@@ -48,6 +49,85 @@ export const Web3Provider = ({ children }) => {
       throw new Error("No ethereum object.");
     }
   };
+  const getStatus = async () => {
+    try {
+      const contract = getEthererumContract();
+      const data = await contract.getStatus();
+      setUser({ role: data });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getAllPatients = async () => {
+    try {
+      const contract = getEthererumContract();
+      const data = await contract.getAllPatients();
+      return data;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const createDoctor = async (name, age, gender, hospital) => {
+    try {
+      const contract = getEthererumContract();
+      const transaction = await contract.createDoctor(
+        name,
+        age,
+        gender,
+        hospital,
+        {
+          gasPrice: ethers.utils.parseUnits("50", "gwei"),
+          gasLimit: 1000000,
+        }
+      );
+      const transactionReceipt = await transaction.wait();
+      if (transactionReceipt.status !== 1) {
+        alert("error message");
+        return;
+      }
+      console.log(transactionReceipt);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const createPatient = async (name, age, gender) => {
+    try {
+      const contract = getEthererumContract();
+      const transaction = await contract.createPatient(name, age, gender, {
+        gasPrice: ethers.utils.parseUnits("50", "gwei"),
+        gasLimit: 1000000,
+      });
+      const transactionReceipt = await transaction.wait();
+      if (transactionReceipt.status !== 1) {
+        alert("error message");
+        return;
+      }
+      console.log(transactionReceipt);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getDoctor = async () => {
+    try {
+      const contract = getEthererumContract();
+      const data = await contract.getDoctor();
+      setUser(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const getPatient = async () => {
+    try {
+      const contract = getEthererumContract();
+      const data = await contract.getPatient();
+      setUser(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
     checkIfWalletIsConnected();
@@ -58,6 +138,12 @@ export const Web3Provider = ({ children }) => {
       value={{
         connectWallet,
         connectedAccount,
+        getStatus,
+        getAllPatients,
+        createDoctor,
+        createPatient,
+        getDoctor,
+        getPatient,
       }}
     >
       {children}

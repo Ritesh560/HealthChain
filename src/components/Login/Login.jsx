@@ -12,14 +12,27 @@ import { useNavigate } from "react-router-dom";
 const Login = () => {
   const [loading, setLoading] = useState(false);
   const [isModal, setModal] = useState(false);
+  const { user, getDoctor, getPatient } = useContext(Web3Context);
 
   const { connectedAccount, connectWallet } = useContext(Web3Context);
   const navigate = useNavigate();
   useEffect(() => {
-    if (connectedAccount) {
-      navigate("/dashboard");
-    }
-  }, [connectedAccount]);
+    const init = async () => {
+      if (connectedAccount) {
+        navigate("/dashboard");
+        if (user?.role === "Unregistered") {
+          setModal(true);
+        } else {
+          if (user?.role === "Doctor") {
+            await getDoctor();
+          } else {
+            await getPatient();
+          }
+        }
+      }
+    };
+    init();
+  }, [connectedAccount, user]);
 
   const [info, setInfo] = useState({
     type: "Doctor", //Patient
