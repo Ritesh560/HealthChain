@@ -4,6 +4,10 @@
 
 HealthChain is a decentralized health records system designed to streamline the management of patient health data, reducing redundancy in medical tests and facilitating secure data sharing between patients and their healthcare providers. Built for the hackCBS Hackathon, HealthChain uses ReactJS, SASS, Solidity, and Ethereum blockchain to ensure data security, privacy, and accessibility.
 
+## Problem we are Solving
+
+Whenever a person suffering from long time desiase which needs regular treatments shifts to a new location he / she has to face a lot of problems like finding a new doctor and after finding doctor he has to go for all the tests again which not only is time consuming , exhausting and cost a lot of money also so , to prevent we can use online record system with a immutablity of blockchain and lot of other features of it.
+
 ## Table of Contents
 
 - [Features](#features)
@@ -33,12 +37,17 @@ https://chainofhealth.vercel.app/
 ## Tech Stack
 
 - ReactJS
-- SASS
+- Sass
 - Solidity
-- Ethereum Blockchain
+- Ethereum , Blockchain
+- Ether.js
+- hardhat
 
 ## Contributors
-
+Team Name - git_bit
 - [Ritesh Kumar](https://riteshdev.vercel.app/)
+- Name - Ritesh Kumar
+- Devfolio ID - Ritesh_kumar1
 - [Bharat Kumar](https://bharatkumar.vercel.app/)
-
+- Name - Bharat Kumar
+- Devfolio ID - Bharatkumar15
