@@ -1,25 +1,23 @@
-import React, { useState } from "react"
-import styles from "./Illness.module.scss"
-import Modal from "../../libs/Modal/Modal"
-import { ReactComponent as ImageFile } from "../../libs/icons/image_file.svg"
-import { ReactComponent as Share } from "../../libs/icons/share_icon.svg"
-import { ReactComponent as Download } from "../../libs/icons/download.svg"
-import { ReactComponent as Close } from "../../libs/icons/close.svg"
-import CreateIllnessModal from "./components/CreateIllnessModal/CreateIllnessModal"
-import { useWeb3 } from "../../context/Web3Context"
+import React, { useState } from "react";
+import styles from "./Illness.module.scss";
+import Modal from "../../libs/Modal/Modal";
+import { ReactComponent as ImageFile } from "../../libs/icons/image_file.svg";
+import { ReactComponent as Share } from "../../libs/icons/share_icon.svg";
+import { ReactComponent as Download } from "../../libs/icons/download.svg";
+import { ReactComponent as Close } from "../../libs/icons/close.svg";
+import CreateIllnessModal from "./components/CreateIllnessModal/CreateIllnessModal";
 
 const Illness = ({ isCreateModal, setIsCreateModal }) => {
-  const [selectedIllness, setSelectedIllness] = useState("")
-  const [selectedFile, setSelectedFile] = useState()
-  const { user } = useWeb3()
+  const [selectedIllness, setSelectedIllness] = useState("");
+  const [selectedFile, setSelectedFile] = useState();
 
   const handleCardClick = () => {
-    setSelectedIllness("abcd")
-  }
+    setSelectedIllness("abcd");
+  };
 
   const handleFileUpload = (e) => {
-    setSelectedFile(e.target.files[0])
-  }
+    setSelectedFile(e.target.files[0]);
+  };
 
   return (
     <div className={styles.illnessCards}>
@@ -40,7 +38,12 @@ const Illness = ({ isCreateModal, setIsCreateModal }) => {
         </div>
       ))}
 
-      <Modal onClose={() => setSelectedIllness("")} showCloseButton isModal={!!selectedIllness?.length} className={styles.recordsModal}>
+      <Modal
+        onClose={() => setSelectedIllness("")}
+        showCloseButton
+        isModal={!!selectedIllness?.length}
+        className={styles.recordsModal}
+      >
         <h2 className={styles.title}>Records</h2>
         <div className={styles.records}>
           {[...Array(20)].map((cur) => (
@@ -62,38 +65,47 @@ const Illness = ({ isCreateModal, setIsCreateModal }) => {
             </div>
           ))}
         </div>
-
-        {user?.type === "Patient" &&
-          (!!selectedFile ? (
-            <div className={styles.uploadOptions}>
-              <div className={styles.selectedRecord}>
-                <div className={styles.left}>
-                  <div className={styles.icon}>
-                    <ImageFile />
-                  </div>
-                  <div className={styles.info}>
-                    <h3 className={styles.name}>{selectedFile?.name}</h3>
-                  </div>
+        {!!selectedFile ? (
+          <div className={styles.uploadOptions}>
+            <div className={styles.selectedRecord}>
+              <div className={styles.left}>
+                <div className={styles.icon}>
+                  <ImageFile />
                 </div>
-                <div className={styles.shareAndDelete} onClick={() => setSelectedFile()}>
-                  <Close />
+                <div className={styles.info}>
+                  <h3 className={styles.name}>{selectedFile?.name}</h3>
                 </div>
               </div>
-              <div className={styles.upload}>Upload</div>
+              <div
+                className={styles.shareAndDelete}
+                onClick={() => setSelectedFile()}
+              >
+                <Close />
+              </div>
             </div>
-          ) : (
-            <>
-              <label htmlFor="inputFile" className={styles.create}>
-                Create new record
-              </label>
-              <input type="file" id="inputFile" className={styles.inputFile} onChange={handleFileUpload} />
-            </>
-          ))}
+            <div className={styles.upload}>Upload</div>
+          </div>
+        ) : (
+          <>
+            <label htmlFor="inputFile" className={styles.create}>
+              Create new record
+            </label>
+            <input
+              type="file"
+              id="inputFile"
+              className={styles.inputFile}
+              onChange={handleFileUpload}
+            />
+          </>
+        )}
       </Modal>
 
-      <CreateIllnessModal isModal={isCreateModal} setIsModal={setIsCreateModal} />
+      <CreateIllnessModal
+        isModal={isCreateModal}
+        setIsModal={setIsCreateModal}
+      />
     </div>
-  )
-}
+  );
+};
 
-export default Illness
+export default Illness;
