@@ -36,7 +36,14 @@ const DoctorDashboard = () => {
       </div>
 
       {!!selectedPatient.length ? (
-        <Illness isCreateModal={isCreateModal} setIsCreateModal={setIsCreateModal} />
+        true ? (
+          <Illness isCreateModal={isCreateModal} setIsCreateModal={setIsCreateModal} />
+        ) : (
+          <div className={styles.EmptyState}>
+            <EmptyState />
+            <p>No sickness record</p>
+          </div>
+        )
       ) : (
         <>
           {patients?.length ? (
@@ -56,7 +63,7 @@ const DoctorDashboard = () => {
           ) : (
             <div className={styles.EmptyState}>
               <EmptyState />
-              <p>No patients</p>
+              <p>No patient record</p>
             </div>
           )}
         </>
