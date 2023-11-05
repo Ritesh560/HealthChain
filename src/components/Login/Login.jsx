@@ -1,3 +1,4 @@
+import Spinner from "../../libs/Spinner/Spinner";
 import React, { useContext, useEffect, useState } from "react";
 import styles from "./Login.module.scss";
 import Modal from "../../libs/Modal/Modal";
@@ -5,7 +6,6 @@ import Modal from "../../libs/Modal/Modal";
 import { ReactComponent as DoctorIcon } from "../../libs/icons/image_file.svg";
 import { ReactComponent as PatientIcon } from "../../libs/icons/image_file.svg";
 import Select from "../../libs/Select/Select";
-import toast from "react-hot-toast";
 import { Web3Context } from "../../context/Web3Context";
 import { useNavigate } from "react-router-dom";
 
@@ -29,50 +29,14 @@ const Login = () => {
     hospital: "",
   });
 
-  // const create = async () => {
-  //   console.log(account);
-  //   if (info.type === "Doctor") {
-  //     await healthChainInstance.methods
-  //       .createDoctor(info.name, info.age, info.gender, info.hospital)
-  //       .send({
-  //         from: account,
-  //       })
-  //       .on("receipt", function (receipt) {
-  //         toast.success(
-  //           `Transaction completed. ${receipt.transactionHash.slice(0, 10)}...`
-  //         );
-  //         toast.success("Profile created");
-  //       });
-  //     setUser((prev) => {
-  //       return { ...prev, type: "Doctor" };
-  //     });
-  //   } else if (info.type === "Patient") {
-  //     await healthChainInstance.methods
-  //       .createPatient(info.name, info.age, info.gender)
-  //       .send({
-  //         from: account,
-  //       })
-  //       .on("receipt", function (receipt) {
-  //         toast.success(
-  //           `Transaction completed. ${receipt.transactionHash.slice(0, 10)}...`
-  //         );
-  //         toast.success("Profile created");
-  //       });
-  //     setUser((prev) => {
-  //       return { ...prev, type: "Patient" };
-  //     });
-  //   }
-  //   setModal(false);
-  //   navigate("/dashboard");
-  // };
-
   return (
     <div className={styles.loginContainer}>
       {!connectedAccount && (
         <div className={styles.navBarContainer}>
           <div className={styles.logo}>HealthChain</div>
+
           <div className={styles.loggedOut} onClick={connectWallet}>
-            Connect
+            {loading ? <Spinner /> : "Connect"}
           </div>
         </div>
       )}
@@ -157,7 +121,9 @@ const Login = () => {
             </div>
           )}
         </div>
-        <div className={styles.create}>Create account</div>
+        <div className={styles.create}>
+          {true ? <Spinner /> : "Create account"}
+        </div>
       </Modal>
     </div>
   );
