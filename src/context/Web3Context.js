@@ -11,8 +11,7 @@ export const Web3Provider = ({ children }) => {
   const [doneCheckingForMetaMask, setDoneCheckingForMetaMask] = useState(false);
   const [connected, setConnected] = useState(false);
   const [connecting, setConnecting] = useState(false);
-  const [isGoerliChain, setIsGoerliChain] = useState(false);
-  const [user, setUser] = useState({});
+  // const [isGoerliChain, setIsGoerliChain] = useState(false);
   const [healthChainInstance, setHealthChainInstance] = useState(null);
 
   useEffect(() => {
@@ -30,19 +29,19 @@ export const Web3Provider = ({ children }) => {
           }
 
           // Transactions done in this app must be done on the Goerli test network.
-          try {
-            const chainId = await window.ethereum.request({
-              method: "eth_chainId",
-            });
-            console.log(chainId);
-            if (chainId === "0x5") {
-              setIsGoerliChain(true);
-            } else {
-              toast.error("Please change to Goerli Testnet");
-            }
-          } catch (error) {
-            toast.error(error.message);
-          }
+          // try {
+          //   const chainId = await window.ethereum.request({
+          //     method: "eth_chainId",
+          //   });
+          //   console.log(chainId);
+          //   if (chainId === "0x5") {
+          //     setIsGoerliChain(true);
+          //   } else {
+          //     toast.error("Please change to Goerli Testnet");
+          //   }
+          // } catch (error) {
+          //   toast.error(error.message);
+          // }
 
           setDoneCheckingForMetaMask(true);
         }
@@ -73,11 +72,12 @@ export const Web3Provider = ({ children }) => {
 
     init();
   }, [connected]);
+
   useEffect(() => {
     if (web3) {
       var instance = new web3.eth.Contract(
         HealthChainFactory.abi,
-        "0x000CaE307405fbF6fB7fF500343550D12A2D696A" //deployed factory code
+        "0x0981CA3177A191635e70d2d5d6bf6A3004462EF5" //deployed factory code
       );
       console.log(instance);
       setHealthChainInstance(instance);
@@ -91,17 +91,15 @@ export const Web3Provider = ({ children }) => {
         doneCheckingForMetaMask,
         connected,
         connecting,
-        isGoerliChain,
+        // isGoerliChain,
         setConnected,
         setConnecting,
         setDoneCheckingForMetaMask,
-        setIsGoerliChain,
+        // setIsGoerliChain,
         setWeb3,
         account,
         setAccount,
         healthChainInstance,
-        user,
-        setUser,
       }}
     >
       {children}

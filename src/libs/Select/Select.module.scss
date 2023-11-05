@@ -48,13 +48,13 @@
     }
   }
   .options {
+    // overflow: hidden;
     position: absolute;
     z-index: 100;
     top: 115%;
     left: 0;
     max-height: 200px;
-    overflow-y: auto;
-    width: 100%;
+    width: 90%;
     background: white;
     box-shadow: 5px 10px 50px rgba(41, 43, 88, 0.2);
     border-radius: 10px;
@@ -64,6 +64,7 @@
       line-height: 19px;
       font-size: 14px;
       padding: 7px 10px;
+      max-width: 100%;
       width: 100%;
       background-color: white;
       &:hover {

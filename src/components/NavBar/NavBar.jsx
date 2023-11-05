@@ -4,54 +4,13 @@ import { useWeb3 } from "../../context/Web3Context";
 import toast from "react-hot-toast";
 
 function NavBar({ loggedIn }) {
-  const { healthChainInstance, setAccount, user, setUser } = useWeb3();
-  const [name, setName] = useState("");
-  const [naccount, setnAccount] = useState("");
-  const [isCustomer, setIsCustomer] = useState("company");
-  const [phoneNo, setPhoneNo] = useState("");
-  const [loading, setLoading] = useState(false);
 
-  // await noFakeInstance.methods
-  // .validateProduct(productID, manufacturerAddress)
-  // .send({
-  //   from: account,
-  // })
-  // .on("receipt", function (receipt) {
-  //   toast.success(
-  //     `Transaction completed. ${receipt.transactionHash.slice(
-  //       0,
-  //       10
-  //     )}...`
-  //   );
-  //   toast.success("Product Validated");
-  // });
-  const signUp = async (e) => {
-    e.preventDefault();
-
-    setLoading(true);
-    try {
-      const val = await window.ethereum.request({
-        method: "eth_requestAccounts",
-      });
-      if (val.length > 0) {
-        console.log(val[0], naccount);
-        const res = await healthChainInstance.methods.getStatus().call();
-        console.log(res);
-      } else {
-        toast.error("Enter correct Address");
-        setLoading(false);
-      }
-    } catch (error) {
-      setLoading(false);
-      toast.error(error.message);
-    }
-  };
   return (
     <div className={styles.navBarContainer}>
       <div className={styles.logo}>HealthChain</div>
-      <div className={styles.loggedOut} onClick={signUp}>
+      {/* <div className={styles.loggedOut} onClick={signUp}>
         Connect
-      </div>
+      </div> */}
       {/* <div className={styles.profile}>
         <div className={styles.image}>
           <img
