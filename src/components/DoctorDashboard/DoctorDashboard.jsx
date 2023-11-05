@@ -5,17 +5,22 @@ import Illness from "../Illness/Illness"
 
 const DoctorDashboard = () => {
   const [selectedPatient, setSelectedPatient] = useState("")
+  const [isCreateModal, setIsCreateModal] = useState(false)
 
   return (
     <div className={styles.dashboard}>
       <div className={styles.header}>
         <p className={styles.title}>All {!!selectedPatient.length ? "sickness records" : "patients"}</p>
         <SearchBar />
-        <div className={styles.addSickness}>+ Add New</div>
+        {!!selectedPatient.length && (
+          <div className={styles.addSickness} onClick={() => setIsCreateModal(true)}>
+            + Add New
+          </div>
+        )}
       </div>
 
       {!!selectedPatient.length ? (
-        <Illness />
+        <Illness isCreateModal={isCreateModal} setIsCreateModal={setIsCreateModal} />
       ) : (
         <div className={styles.patientsCards}>
           {[...Array(10)].map((a) => (
