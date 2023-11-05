@@ -8,6 +8,7 @@ import { ReactComponent as PatientIcon } from "../../libs/icons/image_file.svg";
 import Select from "../../libs/Select/Select";
 import { Web3Context } from "../../context/Web3Context";
 import { useNavigate } from "react-router-dom";
+import img from "../../libs/icons/profile.png";
 
 const Login = () => {
   const [loading, setLoading] = useState(false);
@@ -55,9 +56,20 @@ const Login = () => {
       <div className={styles.navBarContainer}>
         <div className={styles.logo}>HealthChain</div>
 
-        {!connectedAccount && (
+        {!connectedAccount ? (
           <div className={styles.loggedOut} onClick={connectWallet}>
             {loading ? <Spinner /> : "Connect"}
+          </div>
+        ) : (
+          <div className={styles.profile}>
+            <img
+              src={img}
+              className={styles.image}
+              alt="profile"
+              width={30}
+              height={30}
+            />
+            <p>{connectedAccount}</p>
           </div>
         )}
       </div>
