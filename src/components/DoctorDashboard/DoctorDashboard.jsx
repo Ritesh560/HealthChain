@@ -1,12 +1,23 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import SearchBar from "../SearchBar/SearchBar";
 import styles from "./DoctorDashboard.module.scss";
 import Illness from "../Illness/Illness";
+import { Web3Context } from "../../context/Web3Context";
 
 const DoctorDashboard = () => {
   const [selectedPatient, setSelectedPatient] = useState("");
   const [isCreateModal, setIsCreateModal] = useState(false);
+  const [patients, setPatients] = useState([]);
+  const { getAllPatients } = useContext(Web3Context);
 
+  useEffect(() => {
+    const init = async () => {
+      const p = await getAllPatients();
+      console.log(p);
+      setPatients(p);
+    };
+    init();
+  }, []);
   return (
     <div className={styles.dashboard}>
       <div className={styles.header}>
@@ -28,7 +39,7 @@ const DoctorDashboard = () => {
         />
       ) : (
         <div className={styles.patientsCards}>
-          {[...Array(10)].map((a) => (
+          {patients.map((a) => (
             <div
               className={styles.card}
               onClick={() => setSelectedPatient("abcd")}

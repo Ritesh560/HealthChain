@@ -11,7 +11,6 @@ function App() {
   return (
     <div className={styles.app}>
       <Web3Provider>
-        {/* <AuthProvider> */}
         <div className={styles.app}>
           <Login />
           <Routes>
@@ -19,7 +18,6 @@ function App() {
             <Route path="/dashboard" element={<DoctorDashboard />} />
           </Routes>
         </div>
-        {/* </AuthProvider> */}
       </Web3Provider>
       <Toaster />
     </div>

@@ -53,6 +53,7 @@ export const Web3Provider = ({ children }) => {
     try {
       const contract = getEthererumContract();
       const data = await contract.getStatus();
+      console.log(data);
       setUser({ role: data });
     } catch (error) {
       console.log(error);
@@ -131,6 +132,7 @@ export const Web3Provider = ({ children }) => {
 
   useEffect(() => {
     checkIfWalletIsConnected();
+    getStatus();
   }, []);
 
   return (
@@ -144,6 +146,8 @@ export const Web3Provider = ({ children }) => {
         createPatient,
         getDoctor,
         getPatient,
+        user,
+        setUser,
       }}
     >
       {children}

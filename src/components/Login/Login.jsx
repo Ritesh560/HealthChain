@@ -12,7 +12,8 @@ import { useNavigate } from "react-router-dom";
 const Login = () => {
   const [loading, setLoading] = useState(false);
   const [isModal, setModal] = useState(false);
-  const { user, getDoctor, getPatient } = useContext(Web3Context);
+  const { user, getDoctor, getPatient, createDoctor, createPatient } =
+    useContext(Web3Context);
 
   const { connectedAccount, connectWallet } = useContext(Web3Context);
   const navigate = useNavigate();
@@ -20,14 +21,9 @@ const Login = () => {
     const init = async () => {
       if (connectedAccount) {
         navigate("/dashboard");
+        console.log(user);
         if (user?.role === "Unregistered") {
           setModal(true);
-        } else {
-          if (user?.role === "Doctor") {
-            await getDoctor();
-          } else {
-            await getPatient();
-          }
         }
       }
     };
@@ -35,12 +31,24 @@ const Login = () => {
   }, [connectedAccount, user]);
 
   const [info, setInfo] = useState({
-    type: "Doctor", //Patient
+    role: "Doctor", //Patient
     name: "",
     age: 0,
     gender: "M",
     hospital: "",
   });
+
+  const create = async () => {
+    setLoading(true);
+    if (info.role === "Doctor") {
+      await createDoctor(info.name, info.age, info.gender, info.hospital);
+      setLoading(false);
+    } else {
+      await createPatient(info.name, info.age, info.gender);
+      setLoading(false);
+    }
+    setModal(false);
+  };
 
   return (
     <div className={styles.loginContainer}>
@@ -64,16 +72,16 @@ const Login = () => {
             <h4>Role</h4>
             <div className={styles.roles}>
               <div
-                className={info.type === "Doctor" && styles.selected}
-                onClick={() => setInfo((prev) => ({ ...prev, type: "Doctor" }))}
+                className={info.role === "Doctor" && styles.selected}
+                onClick={() => setInfo((prev) => ({ ...prev, role: "Doctor" }))}
               >
                 <DoctorIcon />
                 <p>Doctor</p>
               </div>
               <div
-                className={info.type === "Patient" && styles.selected}
+                className={info.role === "Patient" && styles.selected}
                 onClick={() =>
-                  setInfo((prev) => ({ ...prev, type: "Patient" }))
+                  setInfo((prev) => ({ ...prev, role: "Patient" }))
                 }
               >
                 <PatientIcon />
@@ -134,8 +142,8 @@ const Login = () => {
             </div>
           )}
         </div>
-        <div className={styles.create}>
-          {true ? <Spinner /> : "Create account"}
+        <div className={styles.create} onClick={create}>
+          {loading ? <Spinner /> : "Create account"}
         </div>
       </Modal>
     </div>
