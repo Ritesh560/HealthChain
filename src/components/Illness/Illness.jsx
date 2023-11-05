@@ -1,35 +1,46 @@
-import React, { useState } from "react"
-import styles from "./Illness.module.scss"
-import Modal from "../../libs/Modal/Modal"
-import { ReactComponent as ImageFile } from "../../libs/icons/image_file.svg"
-import { ReactComponent as Share } from "../../libs/icons/share_icon.svg"
-import { ReactComponent as Download } from "../../libs/icons/download.svg"
-import { ReactComponent as Close } from "../../libs/icons/close.svg"
-import CreateIllnessModal from "./components/CreateIllnessModal/CreateIllnessModal"
+import React, { useContext, useEffect, useState } from "react";
+import styles from "./Illness.module.scss";
+import Modal from "../../libs/Modal/Modal";
+import { ReactComponent as ImageFile } from "../../libs/icons/image_file.svg";
+import { ReactComponent as Share } from "../../libs/icons/share_icon.svg";
+import { ReactComponent as Download } from "../../libs/icons/download.svg";
+import { ReactComponent as Close } from "../../libs/icons/close.svg";
+import CreateIllnessModal from "./components/CreateIllnessModal/CreateIllnessModal";
+import { Web3Context } from "../../context/Web3Context";
 
 const Illness = ({ isCreateModal, setIsCreateModal }) => {
-  const [selectedIllness, setSelectedIllness] = useState("")
-  const [selectedFile, setSelectedFile] = useState()
+  const [selectedIllness, setSelectedIllness] = useState("");
+  const [selectedFile, setSelectedFile] = useState();
+  const { getIllnesses } = useContext(Web3Context);
+  const [illnessess, setIllnessess] = useState([]);
+
+  useEffect(() => {
+    const init = async () => {
+      const p = await getIllnesses();
+      setIllnessess(p);
+    };
+    init();
+  }, []);
 
   const handleCardClick = () => {
-    setSelectedIllness("abcd")
-  }
+    setSelectedIllness("abcd");
+  };
 
   const handleFileUpload = (e) => {
-    setSelectedFile(e.target.files[0])
-  }
+    setSelectedFile(e.target.files[0]);
+  };
 
   return (
     <div className={styles.illnessCards}>
-      {[...Array(5)].map((cur) => (
+      {illnessess.map((cur) => (
         <div className={styles.card} onClick={handleCardClick}>
           <div className={styles.disease}>
             <h4>Disease</h4>
-            <p>Cancer</p>
+            <p>{cur.name}</p>
           </div>
           <div className={styles.doctor}>
             <h4>Doctor</h4>
-            <p>bharat</p>
+            <p>{cur.doctor.name}</p>
           </div>
           <div className={styles.date}>
             <h4>Date</h4>
@@ -38,7 +49,12 @@ const Illness = ({ isCreateModal, setIsCreateModal }) => {
         </div>
       ))}
 
-      <Modal onClose={() => setSelectedIllness("")} showCloseButton isModal={!!selectedIllness?.length} className={styles.recordsModal}>
+      <Modal
+        onClose={() => setSelectedIllness("")}
+        showCloseButton
+        isModal={!!selectedIllness?.length}
+        className={styles.recordsModal}
+      >
         <h2 className={styles.title}>Records</h2>
         <div className={styles.records}>
           {[...Array(20)].map((cur) => (
@@ -71,7 +87,10 @@ const Illness = ({ isCreateModal, setIsCreateModal }) => {
                   <h3 className={styles.name}>{selectedFile?.name}</h3>
                 </div>
               </div>
-              <div className={styles.shareAndDelete} onClick={() => setSelectedFile()}>
+              <div
+                className={styles.shareAndDelete}
+                onClick={() => setSelectedFile()}
+              >
                 <Close />
               </div>
             </div>
@@ -82,14 +101,22 @@ const Illness = ({ isCreateModal, setIsCreateModal }) => {
             <label htmlFor="inputFile" className={styles.create}>
               Create new record
             </label>
-            <input type="file" id="inputFile" className={styles.inputFile} onChange={handleFileUpload} />
+            <input
+              type="file"
+              id="inputFile"
+              className={styles.inputFile}
+              onChange={handleFileUpload}
+            />
           </>
         )}
       </Modal>
 
-      <CreateIllnessModal isModal={isCreateModal} setIsModal={setIsCreateModal} />
+      <CreateIllnessModal
+        isModal={isCreateModal}
+        setIsModal={setIsCreateModal}
+      />
     </div>
-  )
-}
+  );
+};
 
-export default Illness
+export default Illness;
